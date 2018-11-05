@@ -1,3 +1,20 @@
+### 2.8.0
+
+* Added the ability to set `redirectToHttps` in the server config to automatically redirect requests. The list `httpAllowedHosts` in the server config can be used to specify specific hosts for which `http` access is still allowed.
+
+### 2.7.4
+
+* The `proxy` now verifies that the target of a server-side redirect (e.g. HTTP 301 status code) is in the whitelist. If it's not, the redirect is returned to the client instead of handled on the server.
+* Added a list of IP addresses that the proxy will refuse to connect to, even if resolved from a hostname that is in the proxy whitelist. By default, the list includes all IP addresses that are not normal, internet-routable addresses. The list can be customized by setting `blackedlistedAddresses` in the config file. If your server has privileged access to any internet-routable addresses, be sure to add those addresses to the blacklist.
+
+### 2.7.3
+
+* Proxy authentication can now optionally be specified with the `proxyAuth` key in the `--config-file`, as an alternative to `--proxy-auth`.
+
+### 2.7.2
+
+* When using `--proxy-auth` to automatically supply HTTP basic authentication credentials, and the remote server returns 403 (Forbidden), we now retry the request without the credentials. This will usually result in the server responding with a 401 (Unauthorized), causing the user's browser to prompt for credentials. This is useful when some of the resources on the server are not available with the automatic credentials but will work if more powerful credentials are supplied.
+
 ### 2.7.1
 
 * Added support for server-supplied custom headers, by extending the process used to insert the basic http auth header `authorization`.
